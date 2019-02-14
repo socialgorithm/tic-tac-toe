@@ -1,10 +1,11 @@
 import SubBoard from '@socialgorithm/ultimate-ttt/dist/SubBoard';
 import Player from '@socialgorithm/ultimate-ttt';
 import GameServer, { Player as ClientPlayer } from '@socialgorithm/game-server';
+import { GameEndPayload } from '@socialgorithm/game-server/dist/constants';
 
 export default class TicTacToe {
   board: SubBoard;
-  players: Array<Player>;
+  players: Array<ClientPlayer>;
   nextPlayerIndex: number;
   gameServer: GameServer;
 
@@ -15,9 +16,9 @@ export default class TicTacToe {
     });
 
     this.board = new SubBoard(3);
-
-    // TODO Map client players to game players
     
+    this.players = players;
+
     this.nextPlayerIndex = 0
   }
 
@@ -25,28 +26,38 @@ export default class TicTacToe {
     this.askForMoveFromNextPlayer();
   };
 
-  onPlayerMessage = (player: ClientPlayer, payload: any) {
-    this.onPlayerMove
-  }
-
-  onPlayerMove(player: Player, payload: any) {
-    const expectedPlayer = this.players[this.nextPlayerIndex];
-    if (expectedPlayer !== player) {
+  onPlayerMessage(player: ClientPlayer, payload: any) {
+    const expectedPlayer = this.nextPlayerIndex;
+    const playerIndex: any = this.players.indexOf(player);
+    if (expectedPlayer !== playerIndex) {
       // TODO This should either be a game message (for the tournament server), or a player message
-      this.sendGameEnd(this.board);
+      this.gameServer.sendGameMessage('UPDATE', this.board);
       return;
     }
 
     const move = payload.move;
-    this.board = this.board.move(player, move);
+    this.board = this.board.move(playerIndex, move);
 
     if (this.board.isFinished()) {
-      this.sendGameEnd(this.board)
+      const payload: GameEndPayload = {
+        winner: null,
+        tie: null,
+        duration: null,
+        message: null,
+        stats: {
+          board: this.board,
+        },
+      };
+      this.gameServer.sendGameMessage('END', payload)
     } else {
       const previousMove = move;
       this.switchNextPlayer();
       this.askForMoveFromNextPlayer(previousMove);
-      this.sendGameUpdate(this.board)
+      this.gameServer.sendGameMessage('UPDATE', {
+        stats: {
+          board: this.board,
+        },
+      });
     }
   }
 
