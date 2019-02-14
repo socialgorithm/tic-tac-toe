@@ -1,28 +1,38 @@
-import GameEngine from "./GameEngine";
 import SubBoard from '@socialgorithm/ultimate-ttt/dist/SubBoard';
+import Player from '@socialgorithm/ultimate-ttt';
+import GameServer, { Player as ClientPlayer } from '@socialgorithm/game-server';
 
-export default class TicTacToe implements GameEngine {
-  sendToPlayer: (player: Player, payload: any) => any;
-  sendGameUpdate: (payload: any) => any;
-  sendGameEnd: (payload: any) => any;
-
+export default class TicTacToe {
   board: SubBoard;
   players: Array<Player>;
   nextPlayerIndex: number;
+  gameServer: GameServer;
 
-  constructor(players: Array<Player>) {
+  constructor(players: Array<ClientPlayer>) {
+    this.gameServer = new GameServer({ port: 3333 }, {
+      startGame: this.startGame,
+      onPlayerMessage: this.onPlayerMessage,
+    });
+
     this.board = new SubBoard(3);
-    this.players = players;
+
+    // TODO Map client players to game players
+    
     this.nextPlayerIndex = 0
   }
 
-  public startGame() {
+  startGame = () => {
     this.askForMoveFromNextPlayer();
+  };
+
+  onPlayerMessage = (player: ClientPlayer, payload: any) {
+    this.onPlayerMove
   }
 
-  public onPlayerMove(player: Player, payload: any) {
+  onPlayerMove(player: Player, payload: any) {
     const expectedPlayer = this.players[this.nextPlayerIndex];
     if (expectedPlayer !== player) {
+      // TODO This should either be a game message (for the tournament server), or a player message
       this.sendGameEnd(this.board);
       return;
     }
@@ -40,16 +50,16 @@ export default class TicTacToe implements GameEngine {
     }
   }
 
-  private askForMoveFromNextPlayer(previousMove?: any) {
+  askForMoveFromNextPlayer(previousMove?: any) {
     const nextPlayer = this.players[this.nextPlayerIndex];
     if (previousMove) {
-      this.sendToPlayer(nextPlayer, { message: `opponent ${previousMove}` });
+      this.gameServer.sendPlayerMessage(nextPlayer, { message: `opponent ${previousMove}` });
     } else {
-      this.sendToPlayer(nextPlayer, { message: "move" });
+      this.gameServer.sendPlayerMessage(nextPlayer, { message: "move" });
     }
   }
 
-  private switchNextPlayer() {
+  switchNextPlayer() {
     this.nextPlayerIndex = this.nextPlayerIndex === 0 ? 1 : 0;
   }
 }

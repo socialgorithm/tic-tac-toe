@@ -90,6 +90,18 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@socialgorithm/game-server@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@socialgorithm/game-server/-/game-server-0.0.1.tgz#7cff433125b125dd2a7659db1d8bcc4fafb753d0"
+  integrity sha512-d5VH2KR35gCWj/fZYuFBDNs4TfigG+95WlUO418ly833lKDQM+T3NWI4IfNBdoRXGRvwYH6mLzOCxpTiFM9MhQ==
+  dependencies:
+    socket.io "^2.2.0"
+    ts-node "^8.0.2"
+    tsconfig-paths "^3.8.0"
+    tslint "^5.12.1"
+    typedoc "^0.14.2"
+    typescript "^3.3.3"
+
 "@socialgorithm/ultimate-ttt@^4.19.0":
   version "4.19.0"
   resolved "https://registry.yarnpkg.com/@socialgorithm/ultimate-ttt/-/ultimate-ttt-4.19.0.tgz#48e59d832237b4c90537cc25c7d95b018eda1aec"
