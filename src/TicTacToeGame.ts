@@ -1,4 +1,4 @@
-import { GameOutputBindings } from "@socialgorithm/game-server";
+import { GameBindings } from "@socialgorithm/game-server";
 import { GameEndPayload, Player } from "@socialgorithm/game-server/dist/constants";
 import SubBoard from "@socialgorithm/ultimate-ttt/dist/SubBoard";
 import * as uuid from "uuid/v4";
@@ -6,7 +6,6 @@ import * as uuid from "uuid/v4";
 export default class TicTacToeGame {
   public id: string;
 
-  private outputBindings: GameOutputBindings;
   private board: SubBoard;
   private players: Player[];
   private nextPlayerIndex: number;
@@ -14,15 +13,13 @@ export default class TicTacToeGame {
   private endTime: number;
   private duration: number;
 
-  constructor(players: Player[], outputBindings: GameOutputBindings) {
+  constructor(private outputBindings: GameBindings) {
     this.id = uuid();
-
-    this.outputBindings = outputBindings;
-    this.board = new SubBoard(3);
-    this.players = players;
   }
 
-  public startGame() {
+  public startGame(players: Player[]) {
+    this.players = players;
+    this.board = new SubBoard(3);
     this.startTime = Math.round(Date.now() / 1000);
     this.nextPlayerIndex = 0;
     this.askForMoveFromNextPlayer();
