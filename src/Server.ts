@@ -1,5 +1,7 @@
 import GameServer, { GameBindings } from "@socialgorithm/game-server";
 import { Player, SOCKET_MESSAGE } from "@socialgorithm/game-server/dist/constants";
+// tslint:disable-next-line:no-var-requires
+const debug = require("debug")("sg:tic-tac-toe");
 import { ServerOptions } from "./cli/options";
 import TicTacToeGame from "./TicTacToeGame";
 
@@ -11,6 +13,7 @@ export default class Server {
   }
 
   private onConnection(bindings: GameBindings) {
+    debug("Started new Tic Tac Toe Game");
     try {
       const game = new TicTacToeGame(bindings);
       bindings.onStartGame((data: any) => {
@@ -20,8 +23,7 @@ export default class Server {
         game.onPlayerMove(player, payload);
       });
     } catch (e) {
-      // tslint:disable-next-line:no-console
-      console.error("Tic Tac Toe Game Server error", e);
+      debug("Tic Tac Toe Game Server error %O", e);
     }
   }
 }

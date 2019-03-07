@@ -35,11 +35,12 @@
   },
   "homepage": "https://github.com/socialgorithm/tic-tac-toe#readme",
   "dependencies": {
-    "@socialgorithm/game-server": "0.2.3",
+    "@socialgorithm/game-server": "0.2.4",
     "@socialgorithm/ultimate-ttt": "^4.19.0",
     "@types/uuid": "^3.4.4",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^5.0.5",
+    "debug": "^4.1.1",
     "socket.io": "^2.2.0",
     "uuid": "^3.3.2"
   },
