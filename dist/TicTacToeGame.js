@@ -12,9 +12,12 @@ var TicTacToeGame = (function () {
         this.board = new SubBoard_1["default"](3);
         this.startTime = Math.round(Date.now() / 1000);
         this.nextPlayerIndex = 0;
+        this.outputBindings.sendPlayerMessage(this.players[0], "init");
+        this.outputBindings.sendPlayerMessage(this.players[1], "init");
         this.askForMoveFromNextPlayer();
     };
-    TicTacToeGame.prototype.onPlayerMove = function (player, move) {
+    TicTacToeGame.prototype.onPlayerMove = function (player, moveStr) {
+        var move = moveStr.split(",").map(function (coord) { return parseInt(coord, 10); });
         var expectedPlayerIndex = this.nextPlayerIndex;
         var playedPlayerIndex = this.players.indexOf(player);
         if (expectedPlayerIndex !== playedPlayerIndex) {
@@ -42,10 +45,10 @@ var TicTacToeGame = (function () {
     TicTacToeGame.prototype.askForMoveFromNextPlayer = function (previousMove) {
         var nextPlayer = this.players[this.nextPlayerIndex];
         if (previousMove) {
-            this.outputBindings.sendPlayerMessage(nextPlayer, { message: "opponent " + previousMove });
+            this.outputBindings.sendPlayerMessage(nextPlayer, "opponent " + previousMove);
         }
         else {
-            this.outputBindings.sendPlayerMessage(nextPlayer, { message: "move" });
+            this.outputBindings.sendPlayerMessage(nextPlayer, "move");
         }
     };
     TicTacToeGame.prototype.switchNextPlayer = function () {

@@ -11,12 +11,17 @@ export default class Server {
   }
 
   private onConnection(bindings: GameBindings) {
-    const game = new TicTacToeGame(bindings);
-    bindings.onStartGame((data: any) => {
-      game.startGame(data.players);
-    });
-    bindings.onPlayerMessage((player: Player, payload: any) => {
-      game.onPlayerMove(player, payload.move);
-    });
+    try {
+      const game = new TicTacToeGame(bindings);
+      bindings.onStartGame((data: any) => {
+        game.startGame(data.players);
+      });
+      bindings.onPlayerMessage((player: Player, payload: any) => {
+        game.onPlayerMove(player, payload);
+      });
+    } catch (e) {
+      // tslint:disable-next-line:no-console
+      console.error("Tic Tac Toe Game Server error", e);
+    }
   }
 }

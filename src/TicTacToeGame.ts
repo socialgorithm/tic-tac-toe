@@ -22,10 +22,13 @@ export default class TicTacToeGame {
     this.board = new SubBoard(3);
     this.startTime = Math.round(Date.now() / 1000);
     this.nextPlayerIndex = 0;
+    this.outputBindings.sendPlayerMessage(this.players[0], "init");
+    this.outputBindings.sendPlayerMessage(this.players[1], "init");
     this.askForMoveFromNextPlayer();
   }
 
-  public onPlayerMove(player: Player, move: any) {
+  public onPlayerMove(player: Player, moveStr: any) {
+    const move = moveStr.split(",").map((coord: string) => parseInt(coord, 10));
     const expectedPlayerIndex: any = this.nextPlayerIndex;
     const playedPlayerIndex: any = this.players.indexOf(player);
     if (expectedPlayerIndex !== playedPlayerIndex) {
@@ -55,9 +58,9 @@ export default class TicTacToeGame {
   private askForMoveFromNextPlayer(previousMove?: any) {
     const nextPlayer = this.players[this.nextPlayerIndex];
     if (previousMove) {
-      this.outputBindings.sendPlayerMessage(nextPlayer, { message: `opponent ${previousMove}` });
+      this.outputBindings.sendPlayerMessage(nextPlayer, `opponent ${previousMove}` );
     } else {
-      this.outputBindings.sendPlayerMessage(nextPlayer, { message: "move" });
+      this.outputBindings.sendPlayerMessage(nextPlayer, "move");
     }
   }
 

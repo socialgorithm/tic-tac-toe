@@ -11,7 +11,7 @@ export default class TicTacToeGame {
     private duration;
     constructor(outputBindings: GameBindings);
     startGame(players: Player[]): void;
-    onPlayerMove(player: Player, move: any): void;
+    onPlayerMove(player: Player, moveStr: any): void;
     private askForMoveFromNextPlayer;
     private switchNextPlayer;
     private handleGameEnd;

@@ -90,10 +90,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@socialgorithm/game-server@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@socialgorithm/game-server/-/game-server-0.2.2.tgz#fa9222df9d69c3ab5c47b94b8a3b17702c3ceb46"
-  integrity sha512-zNzjw1hDrZna1j8lbK7sDu/VMoFOp3Qn8xdhKO0jEL+LI7DQwEnTb533bwXi3GsGGmkGM+7dKuTBzAWELyb2Sg==
+"@socialgorithm/game-server@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@socialgorithm/game-server/-/game-server-0.2.3.tgz#12fc0700bdf3b1003d1e41fef4bfe38d0f189673"
+  integrity sha512-MXbHwAe7a6R0mjT5x04B8GV/HaSNYjwgz24q6wRp//JUebbn07Jybny8cSJHlsncZZ/KJ9QAS+wJneY9auFReA==
   dependencies:
     socket.io "^2.2.0"
     ts-node "^8.0.2"
@@ -173,10 +173,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
   integrity sha512-vVjM0SVzgaOUpflq4GYBvCpozes8OgIIS5gVXVka+OfK3hvnkC1i93U8WiY2OtNE4XUWyyy/86Kf6e0IHTQw1Q==
 
-"@types/node@^11.10.4":
-  version "11.10.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.4.tgz#3f5fc4f0f322805f009e00ab35a2ff3d6b778e42"
-  integrity sha512-wa09itaLE8L705aXd8F80jnFpxz3Y1/KRHfKsYL2bPc0XF+wEWu8sR9n5bmeu8Ba1N9z2GRNzm/YdHcghLkLKg==
+"@types/node@^11.10.5":
+  version "11.10.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.10.5.tgz#fbaca34086bdc118011e1f05c47688d432f2d571"
+  integrity sha512-DuIRlQbX4K+d5I+GMnv+UfnGh+ist0RdlvOp+JZ7ePJ6KQONCFQv/gKYSU1ZzbVdFSUCKZOltjmpFAGGv5MdYA==
 
 "@types/shelljs@^0.8.0":
   version "0.8.3"
@@ -2924,6 +2924,17 @@ ts-node@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.2.tgz#9ecdf8d782a0ca4c80d1d641cbb236af4ac1b756"
   integrity sha512-MosTrinKmaAcWgO8tqMjMJB22h+sp3Rd1i4fdoWY4mhBDekOwIAKI/bzmRi7IcbCmjquccYg2gcF6NBkLgr0Tw==
+  dependencies:
+    arg "^4.1.0"
+    diff "^3.1.0"
+    make-error "^1.1.1"
+    source-map-support "^0.5.6"
+    yn "^3.0.0"
+
+ts-node@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-8.0.3.tgz#aa60b836a24dafd8bf21b54766841a232fdbc641"
+  integrity sha512-2qayBA4vdtVRuDo11DEFSsD/SFsBXQBRZZhbRGSIkmYmVkWjULn/GGMdG10KVqkaGndljfaTD8dKjWgcejO8YA==
   dependencies:
     arg "^4.1.0"
     diff "^3.1.0"

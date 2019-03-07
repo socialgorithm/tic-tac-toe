@@ -7,13 +7,18 @@ var Server = (function () {
         this.gameServer = new game_server_1["default"](this.onConnection, { port: options.port });
     }
     Server.prototype.onConnection = function (bindings) {
-        var game = new TicTacToeGame_1["default"](bindings);
-        bindings.onStartGame(function (data) {
-            game.startGame(data.players);
-        });
-        bindings.onPlayerMessage(function (player, payload) {
-            game.onPlayerMove(player, payload.move);
-        });
+        try {
+            var game_1 = new TicTacToeGame_1["default"](bindings);
+            bindings.onStartGame(function (data) {
+                game_1.startGame(data.players);
+            });
+            bindings.onPlayerMessage(function (player, payload) {
+                game_1.onPlayerMove(player, payload);
+            });
+        }
+        catch (e) {
+            console.error("Tic Tac Toe Game Server error", e);
+        }
     };
     return Server;
 }());
