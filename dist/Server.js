@@ -5,7 +5,8 @@ var debug = require("debug")("sg:tic-tac-toe");
 var TicTacToeGame_1 = require("./TicTacToeGame");
 var Server = (function () {
     function Server(options) {
-        this.gameServer = new game_server_1["default"](this.onConnection, { port: options.port });
+        var port = process.env.PORT ? parseInt(process.env.PORT, 10) : options.port || 5433;
+        this.gameServer = new game_server_1["default"](this.onConnection, { port: port });
     }
     Server.prototype.onConnection = function (bindings) {
         debug("Started new Tic Tac Toe Game");

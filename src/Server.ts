@@ -9,7 +9,8 @@ export default class Server {
   private gameServer: GameServer;
 
   constructor(options: ServerOptions) {
-    this.gameServer = new GameServer(this.onConnection, { port: options.port });
+    const port = process.env.PORT ? parseInt( process.env.PORT, 10) : options.port || 5433;
+    this.gameServer = new GameServer(this.onConnection, { port });
   }
 
   private onConnection(bindings: GameBindings) {
