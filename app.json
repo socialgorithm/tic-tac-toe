@@ -1,0 +1,9 @@
+{
+    "name": "Tic Tac Toe Game Server",
+    "description": "Tic Tac Toe Game Server",
+    "repository": "https://github.com/socialgorithm/tic-tac-toe",
+    "logo": "https://socialgorithm.org/assets/avatar.png",
+    "keywords": ["tournament", "game", "socialgorithm"],
+    "image": "heroku/nodejs",
+    "env": {}
+  }
