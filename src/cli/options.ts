@@ -9,10 +9,7 @@ const info = require("../../package.json");
  * If launching from the terminal these options can be set as `--{option name}[ value]`
  */
 export type ServerOptions = {
-  version?: boolean;
-  verbose?: boolean;
   port?: number;
-  host?: string;
   help?: number;
 };
 
@@ -21,17 +18,6 @@ export const DEFAULT_OPTIONS: ServerOptions = {
 };
 
 const optionDefinitions = [
-  {
-    description: "The input to process.",
-    name: "verbose",
-    type: Boolean,
-  },
-  {
-    alias: "v",
-    description: "Display the server version",
-    name: "version",
-    type: Boolean,
-  },
   {
     alias: "p",
     defaultValue: DEFAULT_OPTIONS.port,
@@ -62,8 +48,7 @@ const sections = [
     header: "Synopsis",
     // tslint:disable-next-line:object-literal-sort-keys
     content: [
-      `$ ${info.name} {bold --games} {underline 100}`,
-      `$ ${info.name} {bold --port} {underline 5000}`,
+      `$ ${info.name} {bold --port} {underline 5433}`,
       `$ ${info.name} {bold --help}`,
     ],
   },
@@ -84,12 +69,6 @@ export default (): ServerOptions => {
     }
   });
 
-  if (options.version) {
-    // tslint:disable-next-line:no-console
-    console.log(info.version);
-    process.exit(0);
-  }
-
   if (options.help) {
     // tslint:disable-next-line:no-console
     console.log(getUsage(sections));
@@ -101,7 +80,6 @@ export default (): ServerOptions => {
   }
 
   // defaults
-  options.host = options.host || "localhost";
   options.port = options.port || 5433;
 
   return options;

@@ -1,33 +1,26 @@
-import { GameBindings } from "@socialgorithm/game-server";
-import { GameEndPayload, Player } from "@socialgorithm/game-server/dist/constants";
+import { Game, GameOutputChannel, Player } from "@socialgorithm/game-server";
 import SubBoard from "@socialgorithm/ultimate-ttt/dist/SubBoard";
-import * as uuid from "uuid/v4";
 
-export default class TicTacToeGame {
-  public id: string;
+export default class TicTacToeGame implements Game {
 
   private board: SubBoard;
-  private players: Player[];
   private nextPlayerIndex: number;
   private startTime: number;
-  private endTime: number;
-  private duration: number;
 
-  constructor(private outputBindings: GameBindings) {
-    this.id = uuid();
-  }
-
-  public startGame(players: Player[]) {
-    this.players = players;
-    this.board = new SubBoard(3);
+  constructor(private players: Player[], private outputChannel: GameOutputChannel) {
     this.startTime = Math.round(Date.now() / 1000);
     this.nextPlayerIndex = 0;
-    this.outputBindings.sendPlayerMessage(this.players[0], "init");
-    this.outputBindings.sendPlayerMessage(this.players[1], "init");
+    this.outputChannel.sendPlayerMessage(this.players[0], "init");
+    this.outputChannel.sendPlayerMessage(this.players[1], "init");
     this.askForMoveFromNextPlayer();
+    this.board = new SubBoard(3);
   }
 
-  public onPlayerMove(player: Player, moveStr: any) {
+  public onPlayerMessage(player: string, payload: any): void {
+    this.onPlayerMove(player, payload);
+  }
+
+  private onPlayerMove(player: Player, moveStr: any) {
     const move = moveStr.split(",").map((coord: string) => parseInt(coord, 10));
     const expectedPlayerIndex: any = this.nextPlayerIndex;
     const playedPlayerIndex: any = this.players.indexOf(player);
@@ -47,7 +40,7 @@ export default class TicTacToeGame {
       const previousMove = move;
       this.switchNextPlayer();
       this.askForMoveFromNextPlayer(previousMove);
-      this.outputBindings.sendGameUpdate({
+      this.outputChannel.sendGameUpdate({
         stats: {
           board: this.board,
         },
@@ -58,9 +51,9 @@ export default class TicTacToeGame {
   private askForMoveFromNextPlayer(previousMove?: any) {
     const nextPlayer = this.players[this.nextPlayerIndex];
     if (previousMove) {
-      this.outputBindings.sendPlayerMessage(nextPlayer, `opponent ${previousMove}` );
+      this.outputChannel.sendPlayerMessage(nextPlayer, `opponent ${previousMove}` );
     } else {
-      this.outputBindings.sendPlayerMessage(nextPlayer, "move");
+      this.outputChannel.sendPlayerMessage(nextPlayer, "move");
     }
   }
 
@@ -86,7 +79,7 @@ export default class TicTacToeGame {
   }
 
   private sendGameEnd(winner?: string, tie: boolean = false, message?: string) {
-    this.outputBindings.sendGameEnd({
+    this.outputChannel.sendGameEnd({
       duration: this.getTimeFromStart(),
       message,
       stats: {

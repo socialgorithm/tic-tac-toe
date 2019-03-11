@@ -1,17 +1,13 @@
-import { GameBindings } from "@socialgorithm/game-server";
-import { Player } from "@socialgorithm/game-server/dist/constants";
-export default class TicTacToeGame {
-    private outputBindings;
-    id: string;
-    private board;
+import { Game, GameOutputChannel, Player } from "@socialgorithm/game-server";
+export default class TicTacToeGame implements Game {
     private players;
+    private outputChannel;
+    private board;
     private nextPlayerIndex;
     private startTime;
-    private endTime;
-    private duration;
-    constructor(outputBindings: GameBindings);
-    startGame(players: Player[]): void;
-    onPlayerMove(player: Player, moveStr: any): void;
+    constructor(players: Player[], outputChannel: GameOutputChannel);
+    onPlayerMessage(player: string, payload: any): void;
+    private onPlayerMove;
     private askForMoveFromNextPlayer;
     private switchNextPlayer;
     private handleGameEnd;

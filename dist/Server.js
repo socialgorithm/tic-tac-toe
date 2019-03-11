@@ -5,22 +5,11 @@ var debug = require("debug")("sg:tic-tac-toe");
 var TicTacToeGame_1 = require("./TicTacToeGame");
 var Server = (function () {
     function Server(options) {
-        this.gameServer = new game_server_1["default"](this.onConnection, { port: options.port });
+        this.gameServer = new game_server_1["default"]({ name: "Tic Tac Toe" }, this.newGameFunction, { port: options.port });
     }
-    Server.prototype.onConnection = function (bindings) {
+    Server.prototype.newGameFunction = function (gameStartMessage, outputChannel) {
         debug("Started new Tic Tac Toe Game");
-        try {
-            var game_1 = new TicTacToeGame_1["default"](bindings);
-            bindings.onStartGame(function (data) {
-                game_1.startGame(data.players);
-            });
-            bindings.onPlayerMessage(function (player, payload) {
-                game_1.onPlayerMove(player, payload);
-            });
-        }
-        catch (e) {
-            debug("Tic Tac Toe Game Server error %O", e);
-        }
+        return new TicTacToeGame_1["default"](gameStartMessage.players, outputChannel);
     };
     return Server;
 }());

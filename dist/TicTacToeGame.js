@@ -1,20 +1,19 @@
 "use strict";
 exports.__esModule = true;
 var SubBoard_1 = require("@socialgorithm/ultimate-ttt/dist/SubBoard");
-var uuid = require("uuid/v4");
 var TicTacToeGame = (function () {
-    function TicTacToeGame(outputBindings) {
-        this.outputBindings = outputBindings;
-        this.id = uuid();
-    }
-    TicTacToeGame.prototype.startGame = function (players) {
+    function TicTacToeGame(players, outputChannel) {
         this.players = players;
-        this.board = new SubBoard_1["default"](3);
+        this.outputChannel = outputChannel;
         this.startTime = Math.round(Date.now() / 1000);
         this.nextPlayerIndex = 0;
-        this.outputBindings.sendPlayerMessage(this.players[0], "init");
-        this.outputBindings.sendPlayerMessage(this.players[1], "init");
+        this.outputChannel.sendPlayerMessage(this.players[0], "init");
+        this.outputChannel.sendPlayerMessage(this.players[1], "init");
         this.askForMoveFromNextPlayer();
+        this.board = new SubBoard_1["default"](3);
+    }
+    TicTacToeGame.prototype.onPlayerMessage = function (player, payload) {
+        this.onPlayerMove(player, payload);
     };
     TicTacToeGame.prototype.onPlayerMove = function (player, moveStr) {
         var move = moveStr.split(",").map(function (coord) { return parseInt(coord, 10); });
@@ -35,7 +34,7 @@ var TicTacToeGame = (function () {
             var previousMove = move;
             this.switchNextPlayer();
             this.askForMoveFromNextPlayer(previousMove);
-            this.outputBindings.sendGameUpdate({
+            this.outputChannel.sendGameUpdate({
                 stats: {
                     board: this.board
                 }
@@ -45,10 +44,10 @@ var TicTacToeGame = (function () {
     TicTacToeGame.prototype.askForMoveFromNextPlayer = function (previousMove) {
         var nextPlayer = this.players[this.nextPlayerIndex];
         if (previousMove) {
-            this.outputBindings.sendPlayerMessage(nextPlayer, "opponent " + previousMove);
+            this.outputChannel.sendPlayerMessage(nextPlayer, "opponent " + previousMove);
         }
         else {
-            this.outputBindings.sendPlayerMessage(nextPlayer, "move");
+            this.outputChannel.sendPlayerMessage(nextPlayer, "move");
         }
     };
     TicTacToeGame.prototype.switchNextPlayer = function () {
@@ -71,7 +70,7 @@ var TicTacToeGame = (function () {
     };
     TicTacToeGame.prototype.sendGameEnd = function (winner, tie, message) {
         if (tie === void 0) { tie = false; }
-        this.outputBindings.sendGameEnd({
+        this.outputChannel.sendGameEnd({
             duration: this.getTimeFromStart(),
             message: message,
             stats: {
