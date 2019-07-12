@@ -8,12 +8,15 @@ export default class TicTacToeGame implements Game {
   private startTime: number;
 
   constructor(private players: Player[], private outputChannel: GameOutputChannel) {
-    this.startTime = Math.round(Date.now() / 1000);
+    this.board = new SubBoard(3);
     this.nextPlayerIndex = 0;
+  }
+
+  public start(): void {
+    this.startTime = Math.round(Date.now() / 1000);
     this.outputChannel.sendPlayerMessage(this.players[0], "init");
     this.outputChannel.sendPlayerMessage(this.players[1], "init");
     this.askForMoveFromNextPlayer();
-    this.board = new SubBoard(3);
   }
 
   public onPlayerMessage(player: string, payload: any): void {

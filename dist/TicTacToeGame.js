@@ -5,13 +5,15 @@ var TicTacToeGame = (function () {
     function TicTacToeGame(players, outputChannel) {
         this.players = players;
         this.outputChannel = outputChannel;
-        this.startTime = Math.round(Date.now() / 1000);
+        this.board = new SubBoard_1["default"](3);
         this.nextPlayerIndex = 0;
+    }
+    TicTacToeGame.prototype.start = function () {
+        this.startTime = Math.round(Date.now() / 1000);
         this.outputChannel.sendPlayerMessage(this.players[0], "init");
         this.outputChannel.sendPlayerMessage(this.players[1], "init");
         this.askForMoveFromNextPlayer();
-        this.board = new SubBoard_1["default"](3);
-    }
+    };
     TicTacToeGame.prototype.onPlayerMessage = function (player, payload) {
         this.onPlayerMove(player, payload);
     };

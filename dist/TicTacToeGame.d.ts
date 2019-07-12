@@ -6,6 +6,7 @@ export default class TicTacToeGame implements Game {
     private nextPlayerIndex;
     private startTime;
     constructor(players: Player[], outputChannel: GameOutputChannel);
+    start(): void;
     onPlayerMessage(player: string, payload: any): void;
     private onPlayerMove;
     private askForMoveFromNextPlayer;
