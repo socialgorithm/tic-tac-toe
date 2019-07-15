@@ -1,22 +1,25 @@
-import { Game, GameOutputChannel, Player } from "@socialgorithm/game-server";
+import { Messages, Player } from "@socialgorithm/game-server";
 import SubBoard from "@socialgorithm/ultimate-ttt/dist/SubBoard";
+import { debug } from "util";
 
-export default class TicTacToeGame implements Game {
-
+export default class TicTacToeGame {
   private board: SubBoard;
   private nextPlayerIndex: number;
   private startTime: number;
 
-  constructor(private players: Player[], private outputChannel: GameOutputChannel) {
-    this.startTime = Math.round(Date.now() / 1000);
-    this.nextPlayerIndex = 0;
-    this.outputChannel.sendPlayerMessage(this.players[0], "init");
-    this.outputChannel.sendPlayerMessage(this.players[1], "init");
-    this.askForMoveFromNextPlayer();
+  constructor(private players: Player[], private sendMessageToPlayer: (player: Player, message: any) => void, private sendGameEnded: (stats: Messages.GameEndedMessage) => void) {
     this.board = new SubBoard(3);
+    this.nextPlayerIndex = 0;
   }
 
-  public onPlayerMessage(player: string, payload: any): void {
+  public start(): void {
+    this.startTime = Math.round(Date.now() / 1000);
+    this.sendMessageToPlayer(this.players[0], "init");
+    this.sendMessageToPlayer(this.players[1], "init");
+    this.askForMoveFromNextPlayer();
+  }
+
+  public onMessageFromPlayer(player: string, payload: any): void {
     this.onPlayerMove(player, payload);
   }
 
@@ -26,8 +29,8 @@ export default class TicTacToeGame implements Game {
     const playedPlayerIndex: any = this.players.indexOf(player);
     if (expectedPlayerIndex !== playedPlayerIndex) {
       const expectedPlayer = this.players[expectedPlayerIndex];
-      const message = `Expected ${expectedPlayer} to play, but ${player} played`;
-      this.handleGameWon(expectedPlayerIndex, message);
+      debug(`Expected ${expectedPlayer} to play, but ${player} played`);
+      this.handleGameWon(expectedPlayerIndex);
       return;
     }
 
@@ -40,20 +43,15 @@ export default class TicTacToeGame implements Game {
       const previousMove = move;
       this.switchNextPlayer();
       this.askForMoveFromNextPlayer(previousMove);
-      this.outputChannel.sendGameUpdate({
-        stats: {
-          board: this.board,
-        },
-      });
     }
   }
 
   private askForMoveFromNextPlayer(previousMove?: any) {
     const nextPlayer = this.players[this.nextPlayerIndex];
     if (previousMove) {
-      this.outputChannel.sendPlayerMessage(nextPlayer, `opponent ${previousMove}` );
+      this.sendMessageToPlayer(nextPlayer, `opponent ${previousMove}` );
     } else {
-      this.outputChannel.sendPlayerMessage(nextPlayer, "move");
+      this.sendMessageToPlayer(nextPlayer, "move");
     }
   }
 
@@ -71,21 +69,25 @@ export default class TicTacToeGame implements Game {
   }
 
   private handleGameTied() {
-    this.sendGameEnd(null, true);
-  }
-
-  private handleGameWon(winner: string, message?: string) {
-    this.sendGameEnd(winner);
-  }
-
-  private sendGameEnd(winner?: string, tie: boolean = false, message?: string) {
-    this.outputChannel.sendGameEnd({
+    this.sendGameEnded({
       duration: this.getTimeFromStart(),
-      message,
+      players: this.players,
       stats: {
         board: this.board,
       },
-      tie,
+      tie: true,
+      winner: null,
+    });
+  }
+
+  private handleGameWon(winner: string) {
+    this.sendGameEnded({
+      duration: this.getTimeFromStart(),
+      players: this.players,
+      stats: {
+        board: this.board,
+      },
+      tie: false,
       winner,
     });
   }

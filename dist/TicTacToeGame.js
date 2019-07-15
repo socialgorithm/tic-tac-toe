@@ -1,18 +1,22 @@
 "use strict";
 exports.__esModule = true;
 var SubBoard_1 = require("@socialgorithm/ultimate-ttt/dist/SubBoard");
+var util_1 = require("util");
 var TicTacToeGame = (function () {
-    function TicTacToeGame(players, outputChannel) {
+    function TicTacToeGame(players, sendMessageToPlayer, sendGameEnded) {
         this.players = players;
-        this.outputChannel = outputChannel;
-        this.startTime = Math.round(Date.now() / 1000);
-        this.nextPlayerIndex = 0;
-        this.outputChannel.sendPlayerMessage(this.players[0], "init");
-        this.outputChannel.sendPlayerMessage(this.players[1], "init");
-        this.askForMoveFromNextPlayer();
+        this.sendMessageToPlayer = sendMessageToPlayer;
+        this.sendGameEnded = sendGameEnded;
         this.board = new SubBoard_1["default"](3);
+        this.nextPlayerIndex = 0;
     }
-    TicTacToeGame.prototype.onPlayerMessage = function (player, payload) {
+    TicTacToeGame.prototype.start = function () {
+        this.startTime = Math.round(Date.now() / 1000);
+        this.sendMessageToPlayer(this.players[0], "init");
+        this.sendMessageToPlayer(this.players[1], "init");
+        this.askForMoveFromNextPlayer();
+    };
+    TicTacToeGame.prototype.onMessageFromPlayer = function (player, payload) {
         this.onPlayerMove(player, payload);
     };
     TicTacToeGame.prototype.onPlayerMove = function (player, moveStr) {
@@ -21,8 +25,8 @@ var TicTacToeGame = (function () {
         var playedPlayerIndex = this.players.indexOf(player);
         if (expectedPlayerIndex !== playedPlayerIndex) {
             var expectedPlayer = this.players[expectedPlayerIndex];
-            var message = "Expected " + expectedPlayer + " to play, but " + player + " played";
-            this.handleGameWon(expectedPlayerIndex, message);
+            util_1.debug("Expected " + expectedPlayer + " to play, but " + player + " played");
+            this.handleGameWon(expectedPlayerIndex);
             return;
         }
         this.board = this.board.move(playedPlayerIndex, move);
@@ -34,20 +38,15 @@ var TicTacToeGame = (function () {
             var previousMove = move;
             this.switchNextPlayer();
             this.askForMoveFromNextPlayer(previousMove);
-            this.outputChannel.sendGameUpdate({
-                stats: {
-                    board: this.board
-                }
-            });
         }
     };
     TicTacToeGame.prototype.askForMoveFromNextPlayer = function (previousMove) {
         var nextPlayer = this.players[this.nextPlayerIndex];
         if (previousMove) {
-            this.outputChannel.sendPlayerMessage(nextPlayer, "opponent " + previousMove);
+            this.sendMessageToPlayer(nextPlayer, "opponent " + previousMove);
         }
         else {
-            this.outputChannel.sendPlayerMessage(nextPlayer, "move");
+            this.sendMessageToPlayer(nextPlayer, "move");
         }
     };
     TicTacToeGame.prototype.switchNextPlayer = function () {
@@ -63,20 +62,24 @@ var TicTacToeGame = (function () {
         }
     };
     TicTacToeGame.prototype.handleGameTied = function () {
-        this.sendGameEnd(null, true);
-    };
-    TicTacToeGame.prototype.handleGameWon = function (winner, message) {
-        this.sendGameEnd(winner);
-    };
-    TicTacToeGame.prototype.sendGameEnd = function (winner, tie, message) {
-        if (tie === void 0) { tie = false; }
-        this.outputChannel.sendGameEnd({
+        this.sendGameEnded({
             duration: this.getTimeFromStart(),
-            message: message,
+            players: this.players,
             stats: {
                 board: this.board
             },
-            tie: tie,
+            tie: true,
+            winner: null
+        });
+    };
+    TicTacToeGame.prototype.handleGameWon = function (winner) {
+        this.sendGameEnded({
+            duration: this.getTimeFromStart(),
+            players: this.players,
+            stats: {
+                board: this.board
+            },
+            tie: false,
             winner: winner
         });
     };
