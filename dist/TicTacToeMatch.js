@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var debug = require("debug")("sg:tic-tac-toe:match");
 var TicTacToeGame_1 = require("./TicTacToeGame");
 var TicTacToeMatch = (function () {
     function TicTacToeMatch(options, players, outputChannel) {
@@ -8,11 +9,6 @@ var TicTacToeMatch = (function () {
         this.players = players;
         this.outputChannel = outputChannel;
         this.playNextGame = function () {
-            var gameOutputChannel = {
-                sendGameEnded: _this.onGameEnded,
-                sendMatchEnded: _this.outputChannel.sendMatchEnded,
-                sendMessageToPlayer: _this.outputChannel.sendMessageToPlayer
-            };
             _this.currentGame = new TicTacToeGame_1["default"](_this.players, _this.onGameMessageToPlayer, _this.onGameEnded);
             _this.currentGame.start();
         };
@@ -34,6 +30,7 @@ var TicTacToeMatch = (function () {
         };
     }
     TicTacToeMatch.prototype.start = function () {
+        debug("Starting new Tic-Tac-Toe Match");
         this.playNextGame();
     };
     TicTacToeMatch.prototype.onMessageFromPlayer = function (player, message) {

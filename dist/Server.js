@@ -9,7 +9,6 @@ var Server = (function () {
         this.gameServer = new game_server_1["default"]({ name: "Tic Tac Toe" }, this.newMatchFunction, { port: port });
     }
     Server.prototype.newMatchFunction = function (createMatchMessage, outputChannel) {
-        debug("Started new Tic Tac Toe Game");
         return new TicTacToeMatch_1["default"](createMatchMessage.options, createMatchMessage.players, outputChannel);
     };
     return Server;

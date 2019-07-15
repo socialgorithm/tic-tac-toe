@@ -14,7 +14,6 @@ export default class Server {
   }
 
   private newMatchFunction(createMatchMessage: Messages.CreateMatchMessage, outputChannel: MatchOutputChannel) {
-    debug("Started new Tic Tac Toe Game");
     return new TicTacToeMatch(createMatchMessage.options, createMatchMessage.players, outputChannel);
   }
 }
