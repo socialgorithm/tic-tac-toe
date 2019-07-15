@@ -1,19 +1,20 @@
-import { Game, GameOutputChannel, Player } from "@socialgorithm/game-server";
-export default class TicTacToeGame implements Game {
+import { Messages, Player } from "@socialgorithm/game-server";
+export default class TicTacToeGame {
     private players;
-    private outputChannel;
+    private sendMessageToPlayer;
+    private sendGameEnded;
+    private gameID;
     private board;
     private nextPlayerIndex;
     private startTime;
-    constructor(players: Player[], outputChannel: GameOutputChannel);
+    constructor(players: Player[], sendMessageToPlayer: (player: Player, message: any) => void, sendGameEnded: (stats: Messages.GameEndedMessage) => void);
     start(): void;
-    onPlayerMessage(player: string, payload: any): void;
+    onMessageFromPlayer(player: string, payload: any): void;
     private onPlayerMove;
     private askForMoveFromNextPlayer;
     private switchNextPlayer;
     private handleGameEnd;
     private handleGameTied;
     private handleGameWon;
-    private sendGameEnd;
     private getTimeFromStart;
 }
