@@ -8,6 +8,7 @@ var TicTacToeMatch = (function () {
         this.options = options;
         this.players = players;
         this.outputChannel = outputChannel;
+        this.gamesCompleted = 0;
         this.playNextGame = function () {
             _this.currentGame = new TicTacToeGame_1["default"](_this.players, _this.onGameMessageToPlayer, _this.onGameEnded);
             _this.currentGame.start();

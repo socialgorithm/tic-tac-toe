@@ -3,7 +3,6 @@ export default class TicTacToeGame {
     private players;
     private sendMessageToPlayer;
     private sendGameEnded;
-    private gameID;
     private board;
     private nextPlayerIndex;
     private startTime;

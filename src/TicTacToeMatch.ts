@@ -7,7 +7,7 @@ import TicTacToeGame from "./TicTacToeGame";
 
 export default class TicTacToeMatch implements IMatch {
   private currentGame: TicTacToeGame;
-  private gamesCompleted: number;
+  private gamesCompleted: number = 0;
 
   constructor(public options: MatchOptions, public players: Player[], private outputChannel: MatchOutputChannel) {}
 

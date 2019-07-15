@@ -1,9 +1,8 @@
-import { IMatch, MatchOutputChannel, Messages, Player } from "@socialgorithm/game-server";
+import { Messages, Player } from "@socialgorithm/game-server";
 import SubBoard from "@socialgorithm/ultimate-ttt/dist/SubBoard";
 import { debug } from "util";
 
 export default class TicTacToeGame {
-  private gameID: string;
   private board: SubBoard;
   private nextPlayerIndex: number;
   private startTime: number;
