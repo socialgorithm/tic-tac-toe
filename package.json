@@ -1,6 +1,6 @@
 {
   "name": "tic-tac-toe",
-  "version": "1.0.0",
+  "version": "8.0.0",
   "description": "Socialgorithm TicTacToe Game Engine",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,6 @@
     "build": "tsc -w",
     "test": "npm run lint && cross-env TS_NODE_FILES=true nyc mocha -r ts-node/register -r tsconfig-paths/register --recursive 'test/**/*.test.ts'",
     "lint": "tslint -p tsconfig.json -t stylish 'src/**/*.ts'",
-    "lint:fix": "tslint -p tsconfig.json -t stylish --fix 'src/**/*.ts'",
     "docs": "typedoc --out docs/ --mode modules ./src"
   },
   "repository": {
@@ -20,7 +19,13 @@
   },
   "keywords": [
     "socialgorithm",
-    "tictactoe"
+    "tic",
+    "tac",
+    "toe",
+    "tic-tac-toe",
+    "game",
+    "server",
+    "engine"
   ],
   "author": "Socialgorithm",
   "license": "AGPL-3.0-or-later",
@@ -35,7 +40,7 @@
   },
   "homepage": "https://github.com/socialgorithm/tic-tac-toe#readme",
   "dependencies": {
-    "@socialgorithm/game-server": "^1.1.10",
+    "@socialgorithm/game-server": "8.0.0",
     "@socialgorithm/ultimate-ttt": "^4.19.0",
     "command-line-args": "^5.0.2",
     "command-line-usage": "^5.0.5",
