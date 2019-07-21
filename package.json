@@ -1,6 +1,6 @@
 {
   "name": "tic-tac-toe",
-  "version": "8.0.0",
+  "version": "8.2.0",
   "description": "Socialgorithm TicTacToe Game Engine",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/socialgorithm/tic-tac-toe#readme",
   "dependencies": {
-    "@socialgorithm/game-server": "8.0.0",
+    "@socialgorithm/game-server": "^8.2.0",
     "@socialgorithm/ultimate-ttt": "^4.19.0",
     "command-line-args": "^5.1.1",
     "command-line-usage": "^5.0.5",
