@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
+var debug = require("debug")("sg:tic-tac-toe:game");
 var SubBoard_1 = require("@socialgorithm/ultimate-ttt/dist/SubBoard");
-var util_1 = require("util");
 var TicTacToeGame = (function () {
     function TicTacToeGame(players, sendMessageToPlayer, sendGameEnded) {
         this.players = players;
@@ -25,7 +25,7 @@ var TicTacToeGame = (function () {
         var playedPlayerIndex = this.players.indexOf(player);
         if (expectedPlayerIndex !== playedPlayerIndex) {
             var expectedPlayer = this.players[expectedPlayerIndex];
-            util_1.debug("Expected " + expectedPlayer + " to play, but " + player + " played");
+            debug("Expected " + expectedPlayer + " to play, but " + player + " played");
             this.handleGameWon(expectedPlayerIndex);
             return;
         }

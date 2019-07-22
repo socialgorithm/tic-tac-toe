@@ -18,7 +18,7 @@ export default class TicTacToeMatch implements IMatch {
       if (this.missingPlayers.length === 1) {
         debug(`${this.missingPlayers[0]} did not connect to match, sending match end`);
         this.sendMatchEndDueToTimeout(this.missingPlayers[0]);
-      } else {
+      } else if (this.missingPlayers.length > 1) {
         debug(`Players did not connect to match, sending match end`);
         this.sendMatchEndDueToTimeout();
       }

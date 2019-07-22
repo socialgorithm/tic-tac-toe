@@ -1,6 +1,8 @@
+// tslint:disable-next-line:no-var-requires
+const debug = require("debug")("sg:tic-tac-toe:game");
+
 import { Messages, Player } from "@socialgorithm/game-server";
 import SubBoard from "@socialgorithm/ultimate-ttt/dist/SubBoard";
-import { debug } from "util";
 
 export default class TicTacToeGame {
   private board: SubBoard;

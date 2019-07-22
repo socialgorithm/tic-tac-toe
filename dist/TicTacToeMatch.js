@@ -62,7 +62,7 @@ var TicTacToeMatch = (function () {
                 debug(_this.missingPlayers[0] + " did not connect to match, sending match end");
                 _this.sendMatchEndDueToTimeout(_this.missingPlayers[0]);
             }
-            else {
+            else if (_this.missingPlayers.length > 1) {
                 debug("Players did not connect to match, sending match end");
                 _this.sendMatchEndDueToTimeout();
             }
