@@ -3,6 +3,7 @@
   "version": "8.4.0",
   "description": "Socialgorithm TicTacToe Game Server",
   "main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
     "start:dev": "nodemon",
