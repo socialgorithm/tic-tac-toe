@@ -1,5 +1,5 @@
 {
-  "name": "tic-tac-toe",
+  "name": "@socialgorithm/tic-tac-toe-game-server",
   "version": "8.2.1",
   "description": "Socialgorithm TicTacToe Game Engine",
   "main": "index.js",
