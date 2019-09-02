@@ -1,7 +1,7 @@
 {
   "name": "@socialgorithm/tic-tac-toe-game-server",
   "version": "8.2.1",
-  "description": "Socialgorithm TicTacToe Game Engine",
+  "description": "Socialgorithm TicTacToe Game Server",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -24,8 +24,7 @@
     "toe",
     "tic-tac-toe",
     "game",
-    "server",
-    "engine"
+    "server"
   ],
   "author": "Socialgorithm",
   "license": "AGPL-3.0-or-later",
