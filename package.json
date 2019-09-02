@@ -31,9 +31,6 @@
   "engines": {
     "node": ">= 8"
   },
-  "bin": {
-    "uttt": "bin/index.js"
-  },
   "bugs": {
     "url": "https://github.com/socialgorithm/tic-tac-toe-game-server/issues"
   },
