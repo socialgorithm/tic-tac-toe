@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/socialgorithm/tic-tac-toe.git"
+    "url": "git+https://github.com/socialgorithm/tic-tac-toe-game-server.git"
   },
   "keywords": [
     "socialgorithm",
