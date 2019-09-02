@@ -36,9 +36,9 @@
     "uttt": "bin/index.js"
   },
   "bugs": {
-    "url": "https://github.com/socialgorithm/tic-tac-toe/issues"
+    "url": "https://github.com/socialgorithm/tic-tac-toe-game-server/issues"
   },
-  "homepage": "https://github.com/socialgorithm/tic-tac-toe#readme",
+  "homepage": "https://github.com/socialgorithm/tic-tac-toe-game-server#readme",
   "dependencies": {
     "@socialgorithm/game-server": "^8.2.0",
     "@socialgorithm/ultimate-ttt": "^4.19.0",
