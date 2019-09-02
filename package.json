@@ -1,6 +1,6 @@
 {
   "name": "@socialgorithm/tic-tac-toe-game-server",
-  "version": "8.4.1",
+  "version": "8.4.2",
   "description": "Socialgorithm TicTacToe Game Server",
   "main": "dist/index.js",
   "bin": "bin/index.js",
