@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+exports.DEFAULT_OPTIONS = void 0;
 var commandLineArgs = require("command-line-args");
 var getUsage = require("command-line-usage");
 var info = require("../../package.json");
@@ -24,7 +25,7 @@ var optionDefinitions = [
 ];
 var sections = [
     {
-        header: info.name + " v" + info.version,
+        header: "".concat(info.name, " v").concat(info.version),
         content: info.description
     },
     {
@@ -34,8 +35,8 @@ var sections = [
     {
         header: "Synopsis",
         content: [
-            "$ " + info.name + " {bold --port} {underline 5433}",
-            "$ " + info.name + " {bold --help}",
+            "$ ".concat(info.name, " {bold --port} {underline 5433}"),
+            "$ ".concat(info.name, " {bold --help}"),
         ]
     },
 ];

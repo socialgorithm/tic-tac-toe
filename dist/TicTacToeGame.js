@@ -25,7 +25,7 @@ var TicTacToeGame = (function () {
         var playedPlayerIndex = this.players.indexOf(player);
         if (expectedPlayerIndex !== playedPlayerIndex) {
             var expectedPlayer = this.players[expectedPlayerIndex];
-            debug("Expected " + expectedPlayer + " to play, but " + player + " played");
+            debug("Expected ".concat(expectedPlayer, " to play, but ").concat(player, " played"));
             this.handleGameWon(expectedPlayerIndex);
             return;
         }
@@ -43,7 +43,7 @@ var TicTacToeGame = (function () {
     TicTacToeGame.prototype.askForMoveFromNextPlayer = function (previousMove) {
         var nextPlayer = this.players[this.nextPlayerIndex];
         if (previousMove) {
-            this.sendMessageToPlayer(nextPlayer, "opponent " + previousMove);
+            this.sendMessageToPlayer(nextPlayer, "opponent ".concat(previousMove));
         }
         else {
             this.sendMessageToPlayer(nextPlayer, "move");

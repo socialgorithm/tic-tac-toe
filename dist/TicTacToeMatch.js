@@ -37,7 +37,7 @@ var TicTacToeMatch = (function () {
             if (missingPlayer) {
                 var winner_1 = _this.players.find(function (player) { return player !== missingPlayer; });
                 winnerIndex = _this.players.findIndex(function (player) { return player === winner_1; });
-                timeoutMessage = missingPlayer + " did not connect in time, or disconnected";
+                timeoutMessage = "".concat(missingPlayer, " did not connect in time, or disconnected");
             }
             var matchEndedMessage = {
                 games: [],
@@ -59,7 +59,7 @@ var TicTacToeMatch = (function () {
         (_a = this.missingPlayers).push.apply(_a, players);
         setTimeout(function () {
             if (_this.missingPlayers.length === 1) {
-                debug(_this.missingPlayers[0] + " did not connect to match, sending match end");
+                debug("".concat(_this.missingPlayers[0], " did not connect to match, sending match end"));
                 _this.sendMatchEndDueToTimeout(_this.missingPlayers[0]);
             }
             else if (_this.missingPlayers.length > 1) {
@@ -69,11 +69,11 @@ var TicTacToeMatch = (function () {
         }, 5000);
     }
     TicTacToeMatch.prototype.onPlayerConnected = function (player) {
-        debug("Player " + player + " connected to match");
+        debug("Player ".concat(player, " connected to match"));
         this.missingPlayers = this.missingPlayers.filter(function (missingPlayer) { return player !== missingPlayer; });
     };
     TicTacToeMatch.prototype.onPlayerDisconnected = function (player) {
-        debug("Player " + player + " disconnected from match");
+        debug("Player ".concat(player, " disconnected from match"));
         if (!this.missingPlayers.find(function (missingPlayer) { return missingPlayer === player; })) {
             this.missingPlayers.push(player);
         }
